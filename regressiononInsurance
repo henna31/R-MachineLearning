@@ -1,0 +1,209 @@
+library(ggplot2)
+
+df = Insurance = read.csv('insurance.csv', header = T)
+
+---------------------------------------------------------------------------------------------------Exploratory Data Analysis------------------------ --------------------------------------------------------------------------
+
+num_cols = unlist(lapply(df, is.numeric))
+
+pairs(df[,num_cols], col = factor(df$region))
+
+pairs(df[,num_cols], col = factor(df$smoker))
+
+pairs(df[,num_cols], col =  factor(df$sex))
+
+hist(df$charges)
+
+hist(log(df$charges))
+
+ggplot(df, aes(x = charges)) +
+  geom_histogram(aes(color = region), fill = "white",
+                 position = "identity", bins = 800) +
+  scale_color_manual(values = c("#f76161", "#2e4fe1", "#36343b", "#027f45")) +
+  labs(title ="Charges Distribution by Region")
+
+ggplot(df, aes(x = charges)) +
+  geom_histogram(aes(color = sex), fill = "white",
+                 position = "identity", bins = 200) +
+  scale_color_manual(values = c("#f76161", "#008080")) +
+  labs(title ="Charges Distribution by Sex")
+
+ggplot(df, aes(x = charges)) +
+  geom_histogram(aes(color = smoker), fill = "white",
+                 position = "identity", bins = 800) +
+  scale_color_manual(values = c("#f76161", "#008080")) +
+  labs(title ="Charges Distribution by Smoker")
+
+Insurance = df
+
+Insurance$sex[Insurance$sex == "female"] = 0
+Insurance$sex[Insurance$sex == "male"] = 1
+Insurance$smoker[Insurance$smoker == "no"] = 0
+Insurance$smoker[Insurance$smoker == "yes"] = 1
+Insurance$Northwest[Insurance$region == "northwest"] <- 1
+Insurance$Northwest[Insurance$region != "northwest"] <- 0
+Insurance$Northeast[Insurance$region == "northeast"] <- 1
+Insurance$Northeast[Insurance$region != "northeast"] <- 0
+Insurance$Southwest[Insurance$region == "southwest"] <- 1
+Insurance$Southwest[Insurance$region != "southwest"] <- 0
+Insurance$Southeast[Insurance$region == "southeast"] <- 1
+Insurance$Southeast[Insurance$region != "southeast"] <- 0
+
+Insurance$smoker <- as.numeric(Insurance$smoker)
+Insurance$sex <- as.numeric(Insurance$sex)
+Insurance$Northwest <- as.numeric(Insurance$Northwest)
+Insurance$Northeast <- as.numeric(Insurance$Northeast)
+Insurance$Southwest <- as.numeric(Insurance$Southwest)
+Insurance$Southeast <- as.numeric(Insurance$Southeast)
+Insurance = Insurance[-6]
+Insurance$lny = log(Insurance$charges)
+Insurance = Insurance[-6]
+names(Insurance)
+
+
+
+#Linear regression model 
+
+insurance.lm <- lm(lny~ ., data = Insurance)
+summary(insurance.lm)
+
+coefficients(insurance.lm)
+anova(insurance.lm)
+
+# Step-wise Regression
+full.model  <- lm(lny ~ ., data = Insurance)
+start.model <- lm(lny ~ 1, data = Insurance)
+
+fullback = step(full.model, direction = "backward")
+fullboth = step(full.model, direction = "both")
+
+fullback$anova
+fullback$coefficients
+fullboth$anova
+fullboth$coefficients
+
+forstart = step(start.model, direction = "forward", scope = formula(full.model))
+bothstart = step(start.model, direction = "both",    scope = formula(full.model))
+
+forstart$anova
+forstart$coefficients
+bothstart$anova
+bothstart$coefficients
+
+-----------------------------------------------------------------------------------------------------------------------------------------Randomized Control Block-----------------------------------------------------------------------
+
+## Randomized Control Block
+
+df$sex = factor(df$sex)
+df$smoker = factor(df$smoker)
+df$region = factor(df$region)
+
+y = df$charges
+
+smoker = df$smoker
+
+region = df$region
+
+ins_aov = aov(y ~ smoker + region)
+
+summary(ins_aov)
+
+anova(ins_aov)
+
+qqnorm(ins_aov$residuals, main = "with interaction")
+qqline(ins_aov$residuals)
+
+shapiro.test(ins_aov$residuals)
+
+# transform charges
+df$charges = log(df$charges)
+
+#plots
+pairs(df[,num_cols], col = factor(df$region), main = "Saccer Plot by Region")
+
+pairs(df[,num_cols], col = factor(df$smoker), main = "Saccer Plot by Smoker")
+
+pairs(df[,num_cols], col =  factor(df$sex), main = "Saccer Plot by Sex")
+
+ggplot(df, aes(x = charges)) +
+  geom_histogram(aes(color = region), fill = "white",
+                 position = "identity", bins = 1000) +
+  scale_color_manual(values = c("#f76161", "#2e4fe1", "#36343b", "#027f45")) +
+  labs(title ="Charges Distribution After Log Transformation by Region")
+
+ggplot(df, aes(x = charges)) +
+  geom_histogram(aes(color = sex), fill = "white",
+                 position = "identity", bins = 1000) +
+  scale_color_manual(values = c("#f76161", "#008080")) +
+  labs(title ="Charges Distribution After Log Transformation by Sex")
+
+ggplot(df, aes(x = charges)) +
+  geom_histogram(aes(color = smoker), fill = "white",
+                 position = "identity", bins = 1000) +
+  scale_color_manual(values = c("#f76161", "#008080")) +
+  labs(title ="Charges Distribution After Log Transformation by Smoker")
+
+ins_linear = lm(charges ~., data = df)
+
+summary(ins_linear)
+
+anova(ins_linear)
+
+predict(ins_linear, interval = "confidence", newdata = data.frame())
+
+
+# test for nomality
+qqnorm(ins_linear$residual)
+qqline(ins_linear$residual)
+shapiro.test(ins_linear$residuals)
+
+#Charges data in our data set does not fall into a normal distribution. Like salaries, and wealth it follows a skewed distribution. This is not desirable when implementing linear models.The models have been tested using the data as it is. The residual plots have been produced, shapiro test for normality have been conducted,  and only then the data has been transformed using natural log. The residual plots, and shapiro tests have again been produced and the results evaluated to test if the assumptions are met.  
+
+##second order polynomial with categorical predictors
+#Polynomial regression is an kind of multiple regression. The difference lays in the powers of the terms of the fitted model. Polynomial regression is recommended when the response is curved. The response can indeed be curved, in this instance, a polynomial model is optimal.A second motivation for using polynomial regression is when the response function is not clear. Due to the nature of our data, it is difficult to know the profile of the response function.For this project, we've used polynomial regression and evaluated whether it is a fit model for our data.  
+#Before implementing polynomial regression the following models have to be implemented. 
+
+#-The predictor variable is centered.
+#-The reason for using a centered predictor in the polynomial regression model is that $X$ and $X^2$ often will be highly correlated, which will cause serious computational difficulties when taking inverse of $(X^TX)^{−1}$
+#-Centering the predictor variable often reduces the multi-collinearitysubstantially and tends to avoid computational difficulties.
+
+#Center observations to prevent multi-collinearity
+df$age_cnt = df$age - mean(df$age)
+
+
+cor(df$age_cnt,df$age_cnt^2)
+
+df$bmi_cnt = df$bmi - mean(df$bmi)
+
+cor(df$bmi_cnt,df$bmi_cnt^2)
+
+df$age_cnt_sq = df$age_cnt^2
+df$bmi_cnt_sq = df$bmi_cnt^2
+df$children_cnt = df$children - mean(df$children)
+
+cor(df$children_cnt,df$children_cnt^2)
+
+dfSq = df[-c(1,3)]
+
+colnames(dfSq)
+
+poly_lm =lm(charges ~., data = dfSq )
+
+#results
+summary(poly_lm)
+anova(poly_lm)
+
+#testing for normality
+qqnorm(poly_lm$residuals)
+qqline(poly_lm$residuals)
+shapiro.test(poly_lm$residuals)
+
+#plots
+plot(poly_lm$fitted.values, poly_lm$residuals)
+plot(df$charges, poly_lm$residuals)
+
+
+
+#Authors: Henna Ali, Keely Wilson, Augusto Hernandez
+
+
