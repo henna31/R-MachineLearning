@@ -1,0 +1,194 @@
+data = read.csv('C:\\Users\\Eshal\\Downloads\\ForestCover.csv',header = T)
+
+names(data)
+
+dim(data)
+
+
+data$Cover_Type <- as.integer(data$Cover_Type) 
+Cl1 = data[data[, "Cover_Type"] == 1,] 
+Cl2 = data[data[, "Cover_Type"] == 2,] 
+Cl3 = data[data[, "Cover_Type"] == 3,] 
+Cl4 = data[data[, "Cover_Type"] == 4,] 
+Cl5 = data[data[, "Cover_Type"] == 5,] 
+Cl6 = data[data[, "Cover_Type"] == 6,] 
+Cl7 = data[data[, "Cover_Type"] == 7,] 
+
+#Find dimensions of each class to see if it is balanced
+dim(Cl1)
+dim(Cl2)
+dim(Cl3)
+dim(Cl4)
+dim(Cl5)
+dim(Cl6)
+dim(Cl7)
+
+#The data set is very imbalanced. Cl2, Cl3 and CL 4 are very small so for the purpose of this report we will not include them.
+#Top 4 are Cl1, Cl5, Cl6, Cl7.
+
+#Undersample Cl5 & CL7 since they are alot larger than Cl1 and Cl 6
+L5 = sample((0.50)*nrow(Cl5)) 
+CL5 = Cl5[L5,] 
+L7 = sample((0.50)*nrow(Cl7)) 
+CL7 = Cl7[L7,] dim(CL5)
+dim(CL7)
+
+#Training and testing sets for Class 1
+set.seed(1) 
+s1 = sample((0.8)*nrow(Cl1)) 
+Cl1train = Cl1[s1,] 
+Cl1test = Cl1[-s1,] dim(Cl1train)
+dim(Cl1test)
+Cl1_y_train = as.data.frame(Cl1train$Cover_Type) 
+colnames(Cl1_y_train)[1] <- "class" 
+Cl1_y_test = as.data.frame(Cl1test$Cover_Type) 
+colnames(Cl1_y_test)[1] <- "class" 
+
+#Training and testing sets for Class 5
+set.seed(5) 
+s5 = sample((0.8)*nrow(CL5)) 
+Cl5train = CL5[s5,] 
+Cl5test = CL5[-s5,] 
+dim(Cl5train)
+dim(Cl5test)
+Cl5_y_train = as.data.frame(Cl5train$Cover_Type) 
+colnames(Cl5_y_train)[1] <- "class" 
+Cl5_y_test = as.data.frame(Cl5test$Cover_Type)
+colnames(Cl5_y_test)[1] <- "class" 
+
+#Training and testing sets for Class 6
+set.seed(6) 
+s6 = sample((0.8)*nrow(Cl6))
+Cl6train = Cl6[s6,] 
+Cl6test = Cl6[-s6,] 
+dim(Cl6train)
+dim(Cl6test)
+Cl6_y_train = as.data.frame(Cl6train$Cover_Type) 
+colnames(Cl6_y_train)[1] <- "class" 
+Cl6_y_test = as.data.frame(Cl6test$Cover_Type) 
+colnames(Cl6_y_test)[1] <- "class" 
+
+#Training and testing sets for Class 7
+set.seed(7) 
+s7 = sample((0.8)*nrow(CL7)) 
+Cl7train = CL7[s7,] 
+Cl7test = CL7[-s7,] dim(Cl7train)
+dim(Cl7test)
+Cl7_y_train = as.data.frame(Cl7train$Cover_Type) 
+colnames(Cl7_y_train)[1] <- "class" 
+Cl7_y_test = as.data.frame(Cl7test$Cover_Type) 
+colnames(Cl7_y_test)[1] <- "class" 
+
+#create a global training and testing set 
+train = rbind(Cl1train,Cl5train,Cl6train,Cl7train) 
+#train = as.factor(train$Cover_Type) 
+test = rbind(Cl1test,Cl5test,Cl6test,Cl7test) 
+
+#create a global training and testing set for y 
+train.y = rbind(Cl1_y_train,Cl5_y_train,Cl6_y_train,Cl7_y_train) 
+#train.y = as.factor(train.y$Cover_Type) 
+test.y = rbind(Cl1_y_test,Cl5_y_test,Cl6_y_test,Cl7_y_test)
+
+#Perform SMOTE to enlarge Class 1 and 6
+library(smotefamily)
+
+imbalance = cbind(train,train.y) 
+S1 = sum(imbalance$class==1) 
+S5 = sum(imbalance$class==5) 
+S6 = sum(imbalance$class==6) 
+S7 = sum(imbalance$class==7) 
+sort_S = sort(c(S1, S5, S6, S7)) 
+sort_S
+
+
+balance = SMOTE(imbalance,imbalance$class,dup_size = 3)
+balance = balance$data sum(balance$class==1)
+balance = SMOTE(balance[,-57],balance$class==6,dup_size = 2.5) 
+balance = balance$data sum(balance$class==6)
+
+hist(balance$class)
+
+balance_train = balance 
+balanced_trainY = balance_train[,56] 
+balanced_train = balance_train[,-c(55, 56, 57)] 
+#balanced_train$Cover_Type = as.factor(balanced_train$Cover_Type)
+
+balanced_trainY = as.factor(balanced_trainY) 
+library(smotefamily) 
+imbalance = cbind(test,test.y) 
+S1 = sum(imbalance$class==1) 
+S5 = sum(imbalance$class==5) 
+S6 = sum(imbalance$class==6) 
+S7 = sum(imbalance$class==7) 
+sort_S = sort(c(S1,S5, S6, S7)) 
+sort_S
+
+balanced = SMOTE(imbalance,imbalance$class,dup_size = 3) balanced = balanced$data sum(balanced$class==1)
+balanced = SMOTE(balanced[,-57],balanced$class==6,dup_size = 2.5) balanced = balanced$data sum(balanced$class==6)
+hist(balanced$class)
+
+balanced_test = balanced balanced_testY = balanced_test[,56] 
+balanced_test = balanced_test[,-c(55, 56,57)] 
+#balanced_test$Cover_Type = as.factor(balanced_test$Cover_Type) 
+balanced_testY = as.factor(balanced_testY) 
+#testb = balanced_test[,-55] dim(balanced_train)
+dim(balanced_test)
+
+
+#Random Forest for 100 trees
+
+library(randomForest)
+set.seed(123) 
+rf.cover= randomForest(balanced_trainY~.,data=balanced_train , ntree = 100, ntry = sqrt(54), importance =TRUE) 
+print(rf.cover)
+
+randomForest(formula = balanced_trainY ~ ., data = balanced_train, ntree = 100, ntry = sqrt(54), importance = TRUE) 
+plot(rf.cover, main = 'Error Vs. Trees for 100 trees')
+
+forest_pred = predict(rf.cover,balanced_test) 
+sum(forest_pred == balanced_testY)/length(balanced_testY)
+plot(forest_pred)
+summary(forest_pred)
+p1 <- predict(rf.cover,balanced_test)
+forest_pred_train = predict(rf.cover,balanced_train) 
+sum(forest_pred_train == balanced_trainY)/length(balanced_trainY)
+p1_1 <- predict(rf.cover, balanced_train) 
+confusionMatrix(p1_1, balanced_trainY)
+
+#Random Forest for 200 trees
+
+library(randomForest) 
+library(caret) 
+set.seed(1234)
+
+rf.cover1= randomForest(balanced_trainY~.,data=balanced_train , ntree = 200, ntry = sqrt(54), importance =TRUE)
+forest_pred = predict(rf.cover1,balanced_test)
+sum(forest_pred == balanced_testY)/length(balanced_testY)
+p2 <- predict(rf.cover1, balanced_test)
+confusionMatrix(p2, balanced_testY)
+print(rf.cover1)
+plot(rf.cover1, main = 'Error Vs. Trees for 200 trees')
+
+#Random Forest for 300 trees
+
+library(randomForest)
+library(caret)
+set.seed(125)
+
+rf.cover2= randomForest(balanced_trainY~.,data=balanced_train , ntree = 300, ntry = sqrt(54), importance =TRUE)
+forest_pred = predict(rf.cover2,balanced_test)
+sum(forest_pred == balanced_testY)/length(balanced_testY)
+p <- predict(rf.cover2, balanced_test)
+confusionMatrix(p, balanced_testY)
+print(rf.cover2)
+plot(rf.cover2, main = 'Error Vs. Trees for 300 trees')
+
+#Importance for when trees = 300
+imp = importance(rf.cover2)
+varImpPlot(rf.cover2)
+knitr::kable(importance(rf.cover2))
+IMK = rf.cover2$importance[,5]
+IMK=sort(IMK, decreasing = TRUE)
+IMK[1:10]
+plot(IMK[1:10], col = 'blue', type = 'b')
+
