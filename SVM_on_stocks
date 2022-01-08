@@ -1,0 +1,386 @@
+
+Comp1 = read.csv('AAPL.csv',header = T)
+Comp2 = read.csv('AMZN.csv',header = T)
+Comp3 = read.csv('CSCO.csv',header = T)
+Comp4 = read.csv('FB.csv',header = T)
+Comp5 = read.csv('GOOG.csv',header = T)
+Comp6 = read.csv('IBM.csv',header = T)
+Comp7 = read.csv('MSFT.csv',header = T)
+Comp8 = read.csv('MU.csv',header = T)
+Comp9 = read.csv('TSLA.csv',header = T)
+Comp10 = read.csv('ADBE.csv',header = T)
+Comp11 = read.csv('ADSK.csv',header = T)
+Comp12 = read.csv('AMD.csv',header = T)
+Comp13 = read.csv('CRM.csv',header = T)
+Comp14 = read.csv('FTNT.csv',header = T)
+Comp15 = read.csv('INTU.csv',header = T)
+Comp16 = read.csv('JNPR.csv',header = T)
+Comp17 = read.csv('ORCL.csv',header = T)
+Comp18 = read.csv('QCOM.csv',header = T)
+Comp19 = read.csv('V.csv',header = T)
+Comp20 = read.csv('NVDA.csv',header = T)
+
+#pre-processing 
+#Rename calendar dates 
+Comp1$Date <- 1:1006 
+Comp2$Date <- 1:1006
+Comp3$Date <- 1:1006
+Comp4$Date <- 1:1006
+Comp5$Date <- 1:1006
+Comp6$Date <- 1:1006
+Comp7$Date <- 1:1006
+Comp8$Date <- 1:1006
+Comp9$Date <- 1:1006
+Comp10$Date <- 1:1006
+Comp11$Date <- 1:1006
+Comp12$Date <- 1:1006
+Comp13$Date <- 1:1006
+Comp14$Date <- 1:1006
+Comp15$Date <- 1:1006
+Comp16$Date <- 1:1006
+Comp17$Date <- 1:1006
+Comp18$Date <- 1:1006
+Comp19$Date <- 1:1006
+Comp20$Date <- 1:1006
+
+library(dplyr)
+St1 = rename(Comp1, t = Date)
+St2 = rename(Comp2, t = Date)
+St3 = rename(Comp3, t = Date)
+St4 = rename(Comp4, t = Date)
+St5 = rename(Comp5, t = Date)
+St6 = rename(Comp6, t = Date)
+St7 = rename(Comp7, t = Date)
+St8 = rename(Comp8, t = Date)
+St9 = rename(Comp9, t = Date)
+St10 = rename(Comp10, t = Date)
+St11 = rename(Comp11, t = Date)
+St12 = rename(Comp12, t = Date)
+St13 = rename(Comp13, t = Date)
+St14 = rename(Comp14, t = Date)
+St15 = rename(Comp15, t = Date)
+St16 = rename(Comp16, t = Date)
+St17 = rename(Comp17, t = Date)
+St18 = rename(Comp18, t = Date)
+St19 = rename(Comp19, t = Date)
+St20 = rename(Comp20, t = Date)
+is.numeric(t)
+
+#No missing values
+#Rate of Return Yj(t)=((Sj(t)-Sj(t-1)))/Sj(t-1)
+for (t in St1){
+  yt1 = 0
+  for (t in 2:1006){
+    yt1[t]=((St1$Close[t]-St1$Close[t-1])/St1$Close[t-1])}}
+
+for (t in St2){
+  yt2 = 0
+  for (t in 2:1006){
+    yt2[t]=((St2$Close[t]-St2$Close[t-1])/St2$Close[t-1])}}
+
+for (t in St3){
+  yt3 = 0
+  for (t in 2:1006){
+    yt3[t]=((St3$Close[t]-St3$Close[t-1])/St3$Close[t-1])}}
+
+for (t in St4){
+  yt4 = 0
+  for (t in 2:1006){
+    yt4[t]=((St4$Close[t]-St4$Close[t-1])/St4$Close[t-1])}}
+
+for (t in St5){
+  yt5 = 0
+  for (t in 2:1006){
+    yt5[t]=((St5$Close[t]-St5$Close[t-1])/St5$Close[t-1])}}
+
+for (t in St6){
+  yt6 = 0
+  for (t in 2:1006){
+    yt6[t]=((St6$Close[t]-St6$Close[t-1])/St6$Close[t-1])}}
+
+for (t in St7){
+  yt7 = 0
+  for (t in 2:1006){
+    yt7[t]=((St7$Close[t]-St7$Close[t-1])/St7$Close[t-1])}}
+
+for (t in St8){
+  yt8 = 0
+  for (t in 2:1006){
+    yt8[t]=((St8$Close[t]-St8$Close[t-1])/St8$Close[t-1])}}
+
+for (t in St9){
+  yt9 = 0
+  for (t in 2:1006){
+    yt9[t]=((St9$Close[t]-St9$Close[t-1])/St9$Close[t-1])}}
+
+for (t in St10){
+  yt10 = 0
+  for (t in 2:1006){
+    yt10[t]=((St10$Close[t]-St10$Close[t-1])/St10$Close[t-1])}}
+
+for (t in St11){
+  yt11 = 0
+  for (t in 2:1006){
+    yt11[t]=((St11$Close[t]-St11$Close[t-1])/St11$Close[t-1])}}
+
+for (t in St12){
+  yt12 = 0
+  for (t in 2:1006){
+    yt12[t]=((St12$Close[t]-St12$Close[t-1])/St12$Close[t-1])}}
+
+for (t in St13){
+  yt13 = 0
+  for (t in 2:1006){
+    yt13[t]=((St13$Close[t]-St13$Close[t-1])/St13$Close[t-1])}}
+
+for (t in St14){
+  yt14 = 0
+  for (t in 2:1006){
+    yt14[t]=((St14$Close[t]-St14$Close[t-1])/St14$Close[t-1])}}
+
+for (t in St15){
+  yt15 = 0
+  for (t in 2:1006){
+    yt15[t]=((St15$Close[t]-St15$Close[t-1])/St15$Close[t-1])}}
+
+for (t in St16){
+  yt16 = 0
+  for (t in 2:1006){
+    yt16[t]=((St16$Close[t]-St16$Close[t-1])/St16$Close[t-1])}}
+
+for (t in St17){
+  yt17 = 0
+  for (t in 2:1006){
+    yt17[t]=((St17$Close[t]-St17$Close[t-1])/St17$Close[t-1])}}
+
+for (t in St18){
+  yt18 = 0
+  for (t in 2:1006){
+    yt18[t]=((St18$Close[t]-St18$Close[t-1])/St18$Close[t-1])}}
+
+for (t in St19){
+  yt19 = 0
+  for (t in 2:1006){
+    yt19[t]=((St19$Close[t]-St19$Close[t-1])/St19$Close[t-1])}}
+
+for (t in St20){
+  yt20 = 0
+  for (t in 2:1006){
+    yt20[t]=((St20$Close[t]-St20$Close[t-1])/St20$Close[t-1])}}
+
+
+#creating features 
+mat <- matrix(ncol = 200, nrow = 0)
+data=data.frame(mat)
+for (t in 10:1006){
+  V1= c(yt1[t-9], yt1[t-8],yt1[t-7],yt1[t-6],yt1[t-5],yt1[t-4],yt1[t-3],yt1[t-2],yt1[t-1],yt1[t])
+  V2= c(yt2[t-9], yt2[t-8],yt2[t-7],yt2[t-6],yt2[t-5],yt2[t-4],yt2[t-3],yt2[t-2],yt2[t-1],yt2[t])
+  V3= c(yt3[t-9], yt3[t-8],yt3[t-7],yt3[t-6],yt3[t-5],yt3[t-4],yt3[t-3],yt3[t-2],yt3[t-1],yt3[t])
+  V4= c(yt4[t-9], yt4[t-8],yt4[t-7],yt4[t-6],yt4[t-5],yt4[t-4],yt4[t-3],yt4[t-2],yt4[t-1],yt4[t])
+  V5= c(yt5[t-9], yt5[t-8],yt5[t-7],yt5[t-6],yt5[t-5],yt5[t-4],yt5[t-3],yt5[t-2],yt5[t-1],yt5[t])
+  V6= c(yt6[t-9], yt6[t-8],yt6[t-7],yt6[t-6],yt6[t-5],yt6[t-4],yt6[t-3],yt6[t-2],yt6[t-1],yt6[t])
+  V7= c(yt7[t-9], yt7[t-8],yt7[t-7],yt7[t-6],yt7[t-5],yt7[t-4],yt7[t-3],yt7[t-2],yt7[t-1],yt7[t])
+  V8= c(yt8[t-9], yt8[t-8],yt8[t-7],yt8[t-6],yt8[t-5],yt8[t-4],yt8[t-3],yt8[t-2],yt8[t-1],yt8[t])
+  V9= c(yt9[t-9], yt9[t-8],yt9[t-7],yt9[t-6],yt9[t-5],yt9[t-4],yt9[t-3],yt9[t-2],yt9[t-1],yt9[t])
+  V10= c(yt10[t-9], yt10[t-8],yt10[t-7],yt10[t-6],yt10[t-5],yt10[t-4],yt10[t-3],yt10[t-2],yt10[t-1],yt10[t])
+  V11= c(yt11[t-9], yt11[t-8],yt11[t-7],yt11[t-6],yt11[t-5],yt11[t-4],yt11[t-3],yt11[t-2],yt11[t-1],yt11[t])
+  V12= c(yt12[t-9], yt12[t-8],yt12[t-7],yt12[t-6],yt12[t-5],yt12[t-4],yt12[t-3],yt12[t-2],yt12[t-1],yt12[t])
+  V13= c(yt13[t-9], yt13[t-8],yt13[t-7],yt13[t-6],yt13[t-5],yt13[t-4],yt13[t-3],yt13[t-2],yt13[t-1],yt13[t])
+  V14= c(yt14[t-9], yt14[t-8],yt14[t-7],yt14[t-6],yt14[t-5],yt14[t-4],yt14[t-3],yt14[t-2],yt14[t-1],yt14[t])
+  V15= c(yt15[t-9], yt15[t-8],yt15[t-7],yt15[t-6],yt15[t-5],yt15[t-4],yt15[t-3],yt15[t-2],yt15[t-1],yt15[t])
+  V16= c(yt16[t-9], yt16[t-8],yt16[t-7],yt16[t-6],yt16[t-5],yt16[t-4],yt16[t-3],yt16[t-2],yt16[t-1],yt16[t])
+  V17= c(yt17[t-9], yt17[t-8],yt17[t-7],yt17[t-6],yt17[t-5],yt17[t-4],yt17[t-3],yt17[t-2],yt17[t-1],yt17[t])
+  V18= c(yt18[t-9], yt18[t-8],yt18[t-7],yt18[t-6],yt18[t-5],yt18[t-4],yt18[t-3],yt18[t-2],yt18[t-1],yt18[t])
+  V19= c(yt19[t-9], yt19[t-8],yt19[t-7],yt19[t-6],yt19[t-5],yt19[t-4],yt19[t-3],yt19[t-2],yt19[t-1],yt19[t])
+  V20= c(yt20[t-9], yt20[t-8],yt20[t-7],yt20[t-6],yt20[t-5],yt20[t-4],yt20[t-3],yt20[t-2],yt20[t-1],yt20[t])
+ 
+  X = c(V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14, V15, V16, V17, V18, V19, V20)
+
+  data[nrow(data) + 1, ] <- X
+} 
+dim(data)
+
+mat <- matrix(ncol = 200, nrow = 9)
+FULL=data.frame(mat)
+FULL[is.na(FULL)] = 0
+fulldata = rbind(FULL, data)
+
+
+mat <- matrix(ncol = 10, nrow = 0)
+X20=data.frame(mat)
+for (t in 10:1006){
+V20= c(yt20[t-9], yt20[t-8],yt20[t-7],yt20[t-6],yt20[t-5],yt20[t-4],yt20[t-3],yt20[t-2],yt20[t-1],yt20[t])
+X = c(V20)
+X20[nrow(X20) + 1, ] <- X}
+yt20 = as.matrix(yt20)
+
+
+targ= c()
+for (t in 1:1005){
+  targ <- c(targ, yt20[t+1])}
+low <- targ[targ>=0.006]
+high <- targ[targ < 0.006]
+length(high)/(1006-10)
+length(low)/(1006-10)
+targ = append(targ, 0)
+targ = as.matrix(targ)
+fulldata1 = cbind(fulldata, targ)
+
+#create a high and low class
+High <- fulldata1[fulldata1$targ >= 0.006,]
+Low <- fulldata1[fulldata1$targ < 0.006,]
+
+Lowclass = Low[,-1]
+Highclass = High[,-1]
+
+#PCA analysis to reduce dimensions
+sx_data = scale(data)
+
+#######correlation matrix
+corrmatrix = cor(sx_data)
+write.csv(corrmatrix,"output_corrmatix.csv")
+
+#######eigenvalue and eigenvector of correlation matrix, they are corresponded
+eig = eigen(corrmatrix)
+eigenvalue = eig$values
+eigenvector = eig$vectors
+
+DATA.cor <- cor(sx_data)
+DATA.eig <- eigen(DATA.cor)
+eigenValues <- DATA.eig$values
+eigenVectors <- DATA.eig$vectors
+
+#DATA.eig$values[1:20]
+#DATA.eig$vectors[1:10,1:10]
+
+PEV <- DATA.eig$values/sum(DATA.eig$values)
+
+####### PEV>0.9
+i = 1
+while (i<=length(data)) {
+  PEV = sum(eigenvalue[1:i])/length(data)
+  if (PEV > 0.9){
+    r = i
+    break
+  }
+  i = i+1
+}
+r
+####### new matrix with first r eigenvector
+
+plot(DATA.eig$values, pch=1, cex=.75, xlab="r", ylab="Lr", main="Lr vs r", col = 'red')
+
+PEV <- DATA.eig$values/sum(DATA.eig$values)
+
+r = 0
+PEV.sum <- c()
+for (i in 1:length(PEV)){
+  PEV.sum <- sum(PEV[1:i])
+  r = r + 1
+  if (PEV.sum >= .90){
+    break
+  }
+}
+
+print(r)
+print(sum(PEV[1:r]))
+
+# Compute the principal components Y1(n)...Yr(n) of for each case n
+W <- eigenvector[,1:r]
+#ZDATA = as.matrix(SDATA) %*% W
+
+
+Ut = as.matrix(data) %*% W
+Low_svm = as.matrix(Lowclass) %*% W
+High_svm = as.matrix(Highclass) %*% W
+
+
+low = as.data.frame(low)
+high = as.data.frame(high)
+
+#Create training and testing set for Low class
+set.seed(4)
+s1 = sample((0.85)*nrow(Low_svm))
+lowtrain = Low_svm[s1,]
+lowtest = Low_svm[-s1,]
+low_y_train = rep('0',dim(lowtrain)[1])
+low_y_test = rep('0',dim(lowtest)[1])
+dim(lowtest)
+dim(lowtrain)
+Lowtest = cbind(as.data.frame(low_y_test), lowtest)
+colnames(Lowtest)[1] <- "class"
+Lowtrain = cbind(as.data.frame(low_y_train), lowtrain)
+colnames(Lowtrain)[1] <- "class"
+low_y_train = as.data.frame(low_y_train)
+colnames(low_y_train)[1] <- "class"
+low_y_test = as.data.frame(low_y_test)
+colnames(low_y_test)[1] <- "class"
+
+#Create training and testing set for High class
+s2 = sample((0.85)*nrow(High_svm))
+hightrain = High_svm[s2,]
+hightest = High_svm[-s2,]
+high_y_train = rep('1',dim(hightrain)[1])
+high_y_test = rep('1',dim(hightest)[1])
+dim(hightest)
+dim(hightrain)
+Hightest = cbind(as.data.frame(high_y_test), hightest)
+colnames(Hightest)[1] <- "class"
+Hightrain = cbind(as.data.frame(high_y_train), hightrain)
+colnames(Hightrain)[1] <- "class"
+high_y_train = as.data.frame(high_y_train)
+colnames(high_y_train)[1] <- "class"
+high_y_test = as.data.frame(high_y_test)
+colnames(high_y_test)[1] <- "class"
+
+#create a global training and testing set
+train = rbind(Lowtrain,Hightrain)
+test = rbind(Lowtest,Hightest)
+y_train = rbind(low_y_train, high_y_train)
+y_test = rbind(low_y_test, high_y_test)
+train$class = as.factor(train$class)
+test$class = as.factor(test$class)
+
+
+library(e1071)
+set.seed(3)
+
+#Linear SVM
+for (c in c(0.1, 2, 5, 10, 12, 15, 20, 30, 35, 50, 100, 150, 200, 300)) {
+  svm_result = svm(train$class~.,data = train, scale = TRUE, kernel='radial',cost = c)
+  support = cat('%support:',dim(svm_result$SV)[1]/855,'\n')
+  support
+  svm_pred = predict(svm_result,test)
+  acc = cat('acc:',sum(svm_pred == test$class)/length(test$class),'\n')
+  acc
+  }
+
+#Radial SVM for gamma = 0.005
+for (c in c(0.1, 2, 5, 10, 12, 15, 20, 30, 35, 50, 100, 150, 200, 300)) {
+  svm_result = svm(train$class~.,data = train, scale = TRUE, kernel='radial',cost = c, gamma = 0.005)
+  support = cat('%support:',dim(svm_result$SV)[1]/855,'\n')
+  support
+  svm_pred = predict(svm_result,test)
+  acc = cat('acc:',sum(svm_pred == test$class)/length(test$class),'\n')
+  acc
+  }
+  
+ #Radial SVM for gamma = 0.01
+for (c in c(0.1, 2, 5, 10, 12, 15, 20, 30, 35, 50, 100, 150, 200, 300)) {
+  svm_result = svm(train$class~.,data = train, scale = TRUE, kernel='radial',cost = c, gamma = 0.01)
+  support = cat('%support:',dim(svm_result$SV)[1]/855,'\n')
+  support
+  svm_pred = predict(svm_result,test)
+  acc = cat('acc:',sum(svm_pred == test$class)/length(test$class),'\n')
+  acc
+  }
+  
+  #Radial SVM for gamma = 0.001
+for (c in c(0.1, 2, 5, 10, 12, 15, 20, 30, 35, 50, 100, 150, 200, 300)) {
+  svm_result = svm(train$class~.,data = train, scale = TRUE, kernel='radial',cost = c, gamma = 0.001)
+  support = cat('%support:',dim(svm_result$SV)[1]/855,'\n')
+  support
+  svm_pred = predict(svm_result,test)
+  acc = cat('acc:',sum(svm_pred == test$class)/length(test$class),'\n')
+  acc
+  }
